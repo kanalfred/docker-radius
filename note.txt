@@ -1,0 +1,24 @@
+run:
+docker run -it --rm --name test-run -p 1812:1812/udp -p 1813:1813/udp -p 18120:18120  kanalfred/centos7 bash
+
+
+
+steps:
+yum install -y freeradius freeradius-utils freeradius-mysql
+
+
+radius:
+
+test:
+radtest alfred landmark5! localhost 0 landmark5!
+
+
+demon
+radiusd -xx -f
+
+
+trick:
+
+DB radcheck table to use Cleartext-Password
+update radcheck set attribute = 'Cleartext-Password' where username = 'alfred';
+
