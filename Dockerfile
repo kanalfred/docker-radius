@@ -8,9 +8,15 @@
 # https://computingforgeeks.com/installing-freeradius-and-daloradius-centos-7/
 #
 # Run:
-# docker run --name test-radius -p 1812:1812/udp -p 1813:1813/udp -p 18120:18120 -d test/radius
+# docker run --name test-radius -p 1812:1812/udp -p 1813:1813/udp -p 18120:18120 -d kanalfred/radius
+# docker run --name radius -p 1812:1812/udp -p 1813:1813/udp -p 18120:18120 -v /data/radius/raddb/mods-available/sql:/etc/raddb/mods-available/sql -d kanalfred/radius
+#
 # Build:
 # docker build -t kanalfred/radius .
+#
+# Steps:
+# 1) update sql host connection string  /data/radius/raddb/mods-available/sql and mount to container
+# 2) [Optional] update vpn host ip in  /data/radius/raddb/client.conf and mount to container
 #
 # Test:
 # radtest alfred landmark5! localhost 0 landmark5!

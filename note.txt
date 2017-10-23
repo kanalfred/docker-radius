@@ -22,3 +22,50 @@ trick:
 DB radcheck table to use Cleartext-Password
 update radcheck set attribute = 'Cleartext-Password' where username = 'alfred';
 
+
+DB: 
+Table fields in radacct is different from radius v2 to v3, easiest way is drop radacct and recreate 
+
+refer: http://www.racksam.com/2017/04/01/migration-of-freeradius-from-2-to-3/
+
+1) 
+DROP TABLE IF EXISTS `radacct `;
+2)
+CREATE TABLE radacct (
+  radacctid bigint(21) NOT NULL auto_increment,
+  acctsessionid varchar(64) NOT NULL default '',
+  acctuniqueid varchar(32) NOT NULL default '',
+  username varchar(64) NOT NULL default '',
+  groupname varchar(64) NOT NULL default '',
+  realm varchar(64) default '',
+  nasipaddress varchar(15) NOT NULL default '',
+  nasportid varchar(15) default NULL,
+  nasporttype varchar(32) default NULL,
+  acctstarttime datetime NULL default NULL,
+  acctupdatetime datetime NULL default NULL,
+  acctstoptime datetime NULL default NULL,
+  acctinterval int(12) default NULL,
+  acctsessiontime int(12) unsigned default NULL,
+  acctauthentic varchar(32) default NULL,
+  connectinfo_start varchar(50) default NULL,
+  connectinfo_stop varchar(50) default NULL,
+  acctinputoctets bigint(20) default NULL,
+  acctoutputoctets bigint(20) default NULL,
+  calledstationid varchar(50) NOT NULL default '',
+  callingstationid varchar(50) NOT NULL default '',
+  acctterminatecause varchar(32) NOT NULL default '',
+  servicetype varchar(32) default NULL,
+  framedprotocol varchar(32) default NULL,
+  framedipaddress varchar(15) NOT NULL default '',
+  PRIMARY KEY (radacctid),
+  UNIQUE KEY acctuniqueid (acctuniqueid),
+  KEY username (username),
+  KEY framedipaddress (framedipaddress),
+  KEY acctsessionid (acctsessionid),
+  KEY acctsessiontime (acctsessiontime),
+  KEY acctstarttime (acctstarttime),
+  KEY acctinterval (acctinterval),
+  KEY acctstoptime (acctstoptime),
+  KEY nasipaddress (nasipaddress)
+) ENGINE = INNODB;
+
